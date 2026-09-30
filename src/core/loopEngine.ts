@@ -142,10 +142,6 @@ export class LoopEngine {
 
   toggleRecord() {
     this.armed = !this.armed;
-    if (this.armed && Tone.getTransport().state !== "started") {
-      void this.play();
-      return;
-    }
     this.touch();
   }
 
@@ -277,8 +273,11 @@ export class LoopEngine {
       this.touch();
       return;
     }
+    if (!this.armed) return;
     const transport = Tone.getTransport();
-    if (!this.armed || transport.state !== "started") return;
+    if (transport.state !== "started") {
+      void this.play(); // first key press after arming starts the loop
+    }
     const total = this.loopTicks();
     const q = this.quantizeTicks();
     let start = transport.ticks;

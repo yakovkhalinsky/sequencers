@@ -191,7 +191,7 @@ export default function LoopRecorder() {
           Snap notes
         </button>
         <span className="hint">
-          Space play/stop · R arm · click a step then play a key to edit · ⌫ removes · Z/X octave C{octave}
+          Space play/stop · R arm, first key starts capture · click a step then play a key to edit · ⌫ removes · Z/X octave C{octave}
         </span>
       </div>
 

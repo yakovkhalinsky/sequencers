@@ -282,3 +282,20 @@ button.rec.on {
   width: 2px;
   background: rgba(255, 255, 255, 0.75);
 }
+
+.note {
+  cursor: pointer;
+}
+
+.note.selected {
+  outline: 2px solid #f5f5f7;
+  outline-offset: -1px;
+  z-index: 2;
+}
+
+.ghost {
+  position: absolute;
+  border: 1px dashed #ffffff90;
+  border-radius: 3px;
+  background: #ffffff12;
+}

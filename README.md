@@ -4,7 +4,7 @@ Web-based MIDI sequencer apps. Note input: Korg nanoKEY2 over USB-MIDI (Web MIDI
 
 ## Apps
 
-- **loop-recorder** — live loop recorder: arm (`R`), play on the nanoKEY2, notes quantize onto a looping bar; layers for overdubs (mute/delete per layer).
+- **loop-recorder** — live loop recorder: arm (`R`), play on the nanoKEY2 (or computer keys `A W S E D F T G Y H U J K`, `Z`/`X` for octave), notes quantize onto a looping bar; click a note or empty step and play a key to re-pitch it (`⌫` removes); scale snapping with root + mode, per-layer overdubs (mute/delete), and virtual-analog voice presets (soft keys, analog bass, acid, pluck, pad, lead).
 
 Live at https://yakovkhalinsky.github.io/sequencers/ (Web MIDI needs a Chromium browser and a MIDI device on the machine you're browsing from).
 

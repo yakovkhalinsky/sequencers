@@ -1,0 +1,284 @@
+:root {
+  color-scheme: dark;
+  --bg: #131316;
+  --panel: #1b1b1f;
+  --border: #2a2a30;
+  --line-soft: #24242a;
+  --line-beat: #3a3a44;
+  --text: #e9e9ee;
+  --muted: #8d8d97;
+  --accent: #5b8cff;
+  --rec: #e5484d;
+  --row-h: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.5 system-ui, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.app header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.app h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.error {
+  color: var(--rec);
+  font-size: 13px;
+  margin: 0;
+}
+
+.devices {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #555;
+  display: inline-block;
+}
+
+.devices select {
+  background: #232329;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 32px;
+  padding: 0 8px;
+  font: inherit;
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+button.ctl {
+  min-width: 44px;
+  height: 36px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #232329;
+  color: var(--text);
+  cursor: pointer;
+}
+
+button.ctl:hover {
+  background: #2b2b33;
+}
+
+button.play.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button.rec.on {
+  background: var(--rec);
+  border-color: var(--rec);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.transport label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.transport input,
+.transport select {
+  background: #232329;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 32px;
+  padding: 0 8px;
+  font: inherit;
+}
+
+.transport input[type="number"] {
+  width: 72px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.layers {
+  display: grid;
+  gap: 6px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.layer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #212127;
+  cursor: pointer;
+}
+
+.layer.active {
+  border-color: var(--accent);
+}
+
+.layer .name {
+  flex: 1;
+}
+
+.layer .count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.layer button {
+  border: 1px solid var(--border);
+  background: #2a2a31;
+  color: var(--text);
+  border-radius: 6px;
+  height: 26px;
+  min-width: 26px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.layer button.dim {
+  opacity: 0.4;
+}
+
+.layers > button {
+  border: 1px dashed var(--border);
+  background: none;
+  color: var(--muted);
+  border-radius: 8px;
+  height: 34px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.layers > button:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.grid {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.grid.empty {
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  color: var(--muted);
+  padding: 24px;
+  text-align: center;
+}
+
+.grid-labels {
+  display: flex;
+  flex-direction: column;
+  width: 38px;
+  flex: none;
+  border-right: 1px solid var(--border);
+  background: #19191d;
+}
+
+.grid-labels span {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  padding-right: 4px;
+  text-align: right;
+  line-height: var(--row-h);
+}
+
+.grid-body {
+  position: relative;
+  flex: 1;
+  background-image:
+    linear-gradient(to right, var(--line-beat) 1px, transparent 1px),
+    linear-gradient(to right, var(--line-soft) 1px, transparent 1px);
+  background-repeat: repeat;
+}
+
+.note {
+  position: absolute;
+  border-radius: 3px;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.75);
+}

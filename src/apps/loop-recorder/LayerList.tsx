@@ -16,6 +16,16 @@ export default function LayerList({ engine }: { engine: LoopEngine }) {
           <span className="name">{layer.name}</span>
           <span className="count">{layer.notes.length}</span>
           <button
+            className={layer.mono ? "" : "dim"}
+            title={layer.mono ? "Monophonic playback" : "Polyphonic playback"}
+            onClick={(event) => {
+              event.stopPropagation();
+              engine.toggleMono(layer.id);
+            }}
+          >
+            {layer.mono ? "mono" : "poly"}
+          </button>
+          <button
             className={layer.muted ? "" : "dim"}
             title={layer.muted ? "Unmute layer" : "Mute layer"}
             onClick={(event) => {

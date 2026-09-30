@@ -15,6 +15,7 @@ export interface Layer {
   name: string;
   notes: RecordedNote[];
   muted: boolean;
+  mono: boolean;
 }
 
 /** A selected note tile (slot=false) or an empty clicked step (slot=true). */
@@ -213,6 +214,7 @@ export class LoopEngine {
       name: `Layer ${this.layers.length + 1}`,
       notes: [],
       muted: false,
+      mono: false,
     };
     this.nextLayerId += 1;
     this.layers.push(layer);
@@ -250,6 +252,15 @@ export class LoopEngine {
     layer.muted = !layer.muted;
     const part = this.parts.get(id);
     if (part) part.mute = layer.muted;
+    this.touch();
+  }
+
+  /** Mono layers retighten overlapped notes to staccato/retrigger on playback. */
+  toggleMono(id: number) {
+    const layer = this.layers.find((candidate) => candidate.id === id);
+    if (!layer) return;
+    layer.mono = !layer.mono;
+    this.syncPart(layer);
     this.touch();
   }
 
@@ -362,12 +373,21 @@ export class LoopEngine {
     this.parts.delete(layer.id);
     old?.dispose();
     if (layer.notes.length === 0) return;
+    const voiced = layer.notes.map((note) => ({ ...note }));
+    if (layer.mono) {
+      const byStart = [...voiced].sort((a, b) => a.start - b.start);
+      for (let index = 1; index < byStart.length; index += 1) {
+        const previous = byStart[index - 1];
+        const span = byStart[index].start - previous.start;
+        previous.duration = Math.max(1, Math.min(previous.duration, span));
+      }
+    }
     const part = new Tone.Part<PartEvent>(
       (time, note) => {
         const duration = Tone.Ticks(note.duration).toSeconds();
         this.voice.attackRelease(note.midi, duration, time, note.velocity);
       },
-      layer.notes.map((note) => ({
+      voiced.map((note) => ({
         ...note,
         time: Tone.Ticks(note.start).toBarsBeatsSixteenths(),
       })),
